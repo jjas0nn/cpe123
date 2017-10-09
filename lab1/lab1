@@ -1,0 +1,11 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname lab1) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(+ 3 (* 9 12))
+;yes 9*12=108 108+3=111
+(cos (/ (* 3 pi) 2))
+;no it gives me a confusing expression instead of zero
+(string-length "Jason")
+;yes i found cosine documentation
+(> (string-length "Thomas") (string-length "Alexander"))
+(place-images (list (rectangle 20 20 "solid" "red") (rectangle 20 20 "solid" "red") (ellipse 60 30 "solid" "blue")) (list (make-posn 60 53) (make-posn 120 53) (make-posn 90 120)) (circle 90 "solid" "green"))
