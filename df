@@ -1,0 +1,41 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname df) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+(require rsound)
+(require racket/string)
+(require rsound/single-cycle)
+(define (sec s) (* 44100 s))
+(define x25e5 (synth-note "vgame" 137 76 (sec 0.25)))
+(define x15e5 (synth-note "vgame" 137 76 (sec 0.15)))
+(define x20d5 (synth-note "vgame" 137 75 (sec 0.2)))
+(define x20e5 (synth-note "vgame" 137 76 (sec 0.2)))
+(define x30e5 (synth-note "vgame" 137 76 (sec 0.3)))
+(define x35e5 (synth-note "vgame" 137 76 (sec 0.35)))
+(define x40e5 (synth-note "vgame" 137 76 (sec 0.4)))
+(define x25a5 (synth-note "vgame" 137 81 (sec 0.25)))
+(define x40a5 (synth-note "vgame" 137 81 (sec 0.40)))
+(define x25cs5 (synth-note "vgame" 137 85 (sec 0.25)))
+(define x50a5 (synth-note "vgame" 137 81 (sec 0.5)))
+(define x15b5 (synth-note "vgame" 137 83 (sec 0.15)))
+(define x27b5 (synth-note "vgame" 137 83 (sec 0.27)))
+(define x15gs5 (synth-note "vgame" 137 80 (sec 0.15)))
+(define x19gs5 (synth-note "vgame" 137 80 (sec 0.19)))
+(define x20gs5 (synth-note "vgame" 137 80 (sec 0.20)))
+(define x28gs5 (synth-note "vgame" 137 80 (sec 0.28)))
+(define x15fs5 (synth-note "vgame" 137 78 (sec 0.15)))
+(define x12fs5 (synth-note "vgame" 137 78 (sec 0.12)))
+(define x20fs5 (synth-note "vgame" 137 78 (sec 0.2)))
+(define x30fs5 (synth-note "vgame" 137 78 (sec 0.3)))
+(define x15a5 (synth-note "vgame" 137 81 (sec 0.15)))
+(define (gn midi dur) (synth-note "vgame" 137 midi (sec dur)))
+(define (grest time) (silence (sec time)))
+(play (rs-append*
+       (list
+        x25e5 (grest .03) x25a5 (grest .03) x25a5 (grest .03) x25cs5 (grest .03) x25cs5 (grest .03) x50a5 x35e5 x25e5 x40e5 x25e5 x15b5 x15a5 x15gs5 x15fs5 x40e5 (grest .5) 
+        x25e5 (grest .03) x25a5 (grest .03) x25a5 (grest .03) x25cs5 (grest .03) x25cs5 (grest .03) x50a5 x35e5 x25a5 (grest .03) x15gs5 x15a5 x27b5 x20d5 x35e5 (grest .5)
+        x25e5 x15gs5 x15gs5 x15gs5 x15fs5 x20fs5 x20gs5 x25a5 x30e5 x30e5
+        x15e5 x40a5 x40a5 x25cs5 x27b5 x20gs5 x25a5 (grest .2)
+        x40a5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x40a5 x40a5 x25e5 x25e5 x25e5 x25e5 x27b5 x28gs5 x50a5 (grest .2)
+        x40a5 x15gs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x40a5 x40a5 x25e5 x25e5 x25e5 x25e5 x27b5 x28gs5 x50a5
+        )))
+
