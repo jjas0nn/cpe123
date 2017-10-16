@@ -164,3 +164,32 @@
             [on-tick seconds 1]
             [to-draw render]
             ))
+;hihat with key
+
+(define (ticker bool )
+  (cond
+    [bool (andplay c-hi-hat-1 bool)]
+    [(not bool) (andplay kick bool)])
+  )
+
+(define (main initial)
+(big-bang initial
+
+          [on-tick ticker 1]
+          [on-key toggle]
+          [to-draw render]
+         
+          ))
+
+(define (toggle bool switch)
+(cond
+  [(and (key=? switch " ")bool) false]
+  [(and (key=? switch " ")(not bool)) true]
+  ))
+
+
+  (define (render bool)
+  (cond
+  [ bool (square 50 "solid" "green")]
+  [(not bool ) (square 50 "solid" "red")]
+  ))
