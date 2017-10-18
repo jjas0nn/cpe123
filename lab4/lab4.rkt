@@ -5,3 +5,5 @@
 (require 2htdp/batch-io)
 (require racket/string)
 (require 2htdp/universe)
+(define (sec second) (* 44100 second))
+(rs-read/clip "C:/Users/Administrator/Documents/git/cpe123/lab4/ib.wav" 0 (sec 10))
