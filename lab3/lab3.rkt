@@ -152,6 +152,12 @@
 (main 13)
 
 (check-expect (render 13) (place-image cat1 (* 3 13) CAT-Y BACKGROUND))
+;48
+(define (reward s)
+  (cond
+    [(<= 0 s 10) "bronze"]
+    [(and (< 10 s) (<= s 20)) "silver"]
+    [else "gold"]))
 ;hihat pgrm
 (define BACKGROUND (empty-scene 100 100))
 (define (render ws) BACKGROUND)
