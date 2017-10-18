@@ -12,7 +12,7 @@
 ;rate of beating is directly proportional to difference between frequencies.  The bigger the difference the faster the rate.
 (define c (make-tone 261.6 .5 (sec 1)))
 (define d (make-tone 293.7 .5 (sec 1)))
-(define epsilon (make-tone 329.7 .5 (sec 1)))
+(define e (make-tone 329.7 .5 (sec 1)))
 (define f (make-tone 349.2 .5 (sec 1)))
 (define g (make-tone 392 .5 (sec 1)))
 (define a (make-tone 440 .5 (sec 1)))
@@ -60,11 +60,9 @@
 ;34
 ;Use string data type to represent string to extract character from
 ;returns first character of non empty string
-;string->char
+;string->string
 ;(define (string-first str) (substring str 0 1))
 (check-expect (string-first jason) "j")
-(define (string-first ...) (substring ... 0 1))
-
 (define (string-first str) (substring str 0 1))
 ;40
 (define WIDTH-OF-WORLD 200)
@@ -113,9 +111,9 @@
 (main 13)
 
 (check-expect (render 50) (place-image CAR 50 Y-CAR BACKGROUND))
-(check-expect (render 200) (place-image CAR 200 Y-CAR BACKGROUND))
+(check-expect (render 200) (place-image CAR 222 Y-CAR BACKGROUND))
 (check-expect (render 50) (place-image CAR 900 Y-CAR BACKGROUND))
-(check-expect (render 200) (place-image CAR -178 Y-CAR BACKGROUND))
+(check-expect (render 99) (place-image CAR -178 Y-CAR BACKGROUND))
 ;41
 (define cat1 (bitmap "../images/cat1.png"))
 (define cat2 (bitmap "../images/cat2.png"))
@@ -191,5 +189,40 @@
   (define (render bool)
   (cond
   [ bool (square 50 "solid" "green")]
-  [(not bool ) (square 50 "solid" "red")]
+  [(not bool) (square 50 "solid" "red")]
   ))
+;synth-note
+(define (sec s) (* 44100 s))
+(define x25e5 (synth-note "vgame" 137 76 (sec 0.25)))
+(define x15e5 (synth-note "vgame" 137 76 (sec 0.15)))
+(define x20d5 (synth-note "vgame" 137 75 (sec 0.2)))
+(define x20e5 (synth-note "vgame" 137 76 (sec 0.2)))
+(define x30e5 (synth-note "vgame" 137 76 (sec 0.3)))
+(define x35e5 (synth-note "vgame" 137 76 (sec 0.35)))
+(define x40e5 (synth-note "vgame" 137 76 (sec 0.4)))
+(define x25a5 (synth-note "vgame" 137 81 (sec 0.25)))
+(define x40a5 (synth-note "vgame" 137 81 (sec 0.40)))
+(define x25cs5 (synth-note "vgame" 137 85 (sec 0.25)))
+(define x50a5 (synth-note "vgame" 137 81 (sec 0.5)))
+(define x15b5 (synth-note "vgame" 137 83 (sec 0.15)))
+(define x27b5 (synth-note "vgame" 137 83 (sec 0.27)))
+(define x15gs5 (synth-note "vgame" 137 80 (sec 0.15)))
+(define x19gs5 (synth-note "vgame" 137 80 (sec 0.19)))
+(define x20gs5 (synth-note "vgame" 137 80 (sec 0.20)))
+(define x28gs5 (synth-note "vgame" 137 80 (sec 0.28)))
+(define x15fs5 (synth-note "vgame" 137 78 (sec 0.15)))
+(define x12fs5 (synth-note "vgame" 137 78 (sec 0.12)))
+(define x20fs5 (synth-note "vgame" 137 78 (sec 0.2)))
+(define x30fs5 (synth-note "vgame" 137 78 (sec 0.3)))
+(define x15a5 (synth-note "vgame" 137 81 (sec 0.15)))
+(define (gn midi dur) (synth-note "vgame" 137 midi (sec dur)))
+(define (grest time) (silence (sec time)))
+(play (rs-append*
+       (list
+        x25e5 (grest .03) x25a5 (grest .03) x25a5 (grest .03) x25cs5 (grest .03) x25cs5 (grest .03) x50a5 x35e5 x25e5 x40e5 x25e5 x15b5 x15a5 x15gs5 x15fs5 x40e5 (grest .5) 
+        x25e5 (grest .03) x25a5 (grest .03) x25a5 (grest .03) x25cs5 (grest .03) x25cs5 (grest .03) x50a5 x35e5 x25a5 (grest .03) x15gs5 x15a5 x27b5 x20d5 x35e5 (grest .5)
+        x25e5 x15gs5 x15gs5 x15gs5 x15fs5 x20fs5 x20gs5 x25a5 x30e5 x30e5
+        x15e5 x40a5 x40a5 x25cs5 x27b5 x20gs5 x25a5 (grest .2)
+        x40a5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x40a5 x40a5 x25e5 x25e5 x25e5 x25e5 x27b5 x28gs5 x50a5 (grest .2)
+        x40a5 x15gs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x12fs5 x40a5 x40a5 x25e5 x25e5 x25e5 x25e5 x27b5 x28gs5 x50a5
+        )))

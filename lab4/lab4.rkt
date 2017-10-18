@@ -6,4 +6,5 @@
 (require racket/string)
 (require 2htdp/universe)
 (define (sec second) (* 44100 second))
-(rs-read/clip "C:/Users/Administrator/Documents/git/cpe123/lab4/ib.wav" 0 (sec 10))
+(rs-read/clip "ib.wav" 0 (sec 10))
+(pstream-queue
