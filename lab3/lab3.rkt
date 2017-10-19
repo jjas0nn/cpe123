@@ -12,7 +12,7 @@
 ;rate of beating is directly proportional to difference between frequencies.  The bigger the difference the faster the rate.
 (define c (make-tone 261.6 .5 (sec 1)))
 (define d (make-tone 293.7 .5 (sec 1)))
-(define e (make-tone 329.7 .5 (sec 1)))
+(define el (make-tone 329.7 .5 (sec 1)))
 (define f (make-tone 349.2 .5 (sec 1)))
 (define g (make-tone 392 .5 (sec 1)))
 (define a (make-tone 440 .5 (sec 1)))
@@ -158,6 +158,8 @@
     [(<= 0 s 10) "bronze"]
     [(and (< 10 s) (<= s 20)) "silver"]
     [else "gold"]))
+(reward 18)
+;silver
 ;hihat pgrm
 (define BACKGROUND (empty-scene 100 100))
 (define (render ws) BACKGROUND)
