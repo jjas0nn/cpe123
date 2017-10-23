@@ -159,7 +159,7 @@
     [(and (< 10 s) (<= s 20)) "silver"]
     [else "gold"]))
 (reward 18)
-;silver
+;silver cvgeid
 ;hihat pgrm
 (define BACKGROUND (empty-scene 100 100))
 (define (render ws) BACKGROUND)
