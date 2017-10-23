@@ -6,5 +6,5 @@
 (require racket/string)
 (require 2htdp/universe)
 (define (sec second) (* 44100 second))
-(rs-read/clip "ib.wav" 0 (sec 10))
-(pstream-queue
+(define ib (rs-read/clip "ib.wav" 0 (sec 10)))
+(make-pstream)
