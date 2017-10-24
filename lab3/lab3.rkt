@@ -114,44 +114,7 @@
 (check-expect (render 200) (place-image CAR 222 Y-CAR BACKGROUND))
 (check-expect (render 50) (place-image CAR 900 Y-CAR BACKGROUND))
 (check-expect (render 99) (place-image CAR -178 Y-CAR BACKGROUND))
-;41
-(define cat1 (bitmap "../images/cat1.png"))
-(define cat2 (bitmap "../images/cat2.png"))
-
-(define CAT-Y 250)
-
-(define HEIGHT-OF-WORLD
-  (* 3 (image-height cat1)))
-(define WIDTH-OF-WORLD
-  (* 10 (image-width cat1)))
-
-(define BACKGROUND
-  (rectangle
-   WIDTH-OF-WORLD
-   HEIGHT-OF-WORLD
-   "outline"
-   "black"))
-
-(define (render ws)
-  (place-image
-   (cond [(odd? ws) cat1]
-         [else cat2])
-   (modulo (* 3 ws) WIDTH-OF-WORLD)
-   CAT-Y
-   BACKGROUND))
-
-(define (tock x)
-  (+ x 1))
-
-
-(define (main ws)
-  (big-bang ws
-            [on-tick tock]
-            [to-draw render]))
-
-(main 13)
-
-(check-expect (render 13) (place-image cat1 (* 3 13) CAT-Y BACKGROUND))
+	
 ;48
 (define (reward s)
   (cond

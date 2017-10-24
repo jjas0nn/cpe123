@@ -5,6 +5,14 @@
 (require 2htdp/batch-io)
 (require racket/string)
 (require 2htdp/universe)
-(define background )empty-scene 100 100))
-(define (render ws) background)
-(define (seconds ws)andplay c-hi-hat-1 (+ 1 ws))
+(require 2htdp/image)
+(define rad 10)
+(define background (empty-scene 500 500))
+(define (render rad x y)
+  (place-image (circle rad "solid" "black") x y background))
+(define (seconds ws)
+  (+ 3 ws))
+(define (main ws)
+  (big-bang ws
+            [on-tick seconds]
+            [to-draw render]))
