@@ -8,11 +8,17 @@
 (require 2htdp/image)
 (define rad 10)
 (define background (empty-scene 500 500))
-(define (render rad x y)
-  (place-image (circle rad "solid" "black") x y background))
+(define (render rad)
+  (place-image (circle rad "solid" "black") rad rad background))
+(define (disp press)
+  (cond
+    [(key=? press "left") "jj"]
+    [(key=? press "left") "right"]))
 (define (seconds ws)
   (+ 3 ws))
 (define (main ws)
   (big-bang ws
             [on-tick seconds]
-            [to-draw render]))
+            [to-draw render]
+            [on-key disp]
+            ))
