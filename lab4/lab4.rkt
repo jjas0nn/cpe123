@@ -37,13 +37,40 @@
 ; (define (revsnd clip frame-index) (rs-ith/left clip (- 441000 frame-index)))
 ;(define (revsnd ib 
 
-
-
-
 (define (noisefun i)
-  (rs-ith/left ib (/ (random 441000) 100)))
- 
-(define noisysound
-  (signal->rsound
-   (* 1 FRAME-RATE)
-   (indexed-signal noisefun)))
+  (rs-ith/left ib i))
+;(play (signal->rsound 44100 (indexed-signal noisefun ) ))
+
+(define (revsnd pos)
+(rs-ith/left ib (- 480000 pos)))
+
+;(play (signal->rsound 480000 (indexed-signal revsnd ) ))
+
+(define (stretchsnd pos)
+(rs-ith/left ib (/ pos 2)))
+
+;(play (signal->rsound 960000 (indexed-signal stretchsnd ) ))
+
+(define DefHz (/ 48000 (* 2 pi)))
+
+(define (sinesnd pos)
+ (* 10000 (sin (* pos (/ 440 DefHz)) )) )
+
+;(play (signal->rsound 48000 (indexed-signasl sinesnd ) ))
+
+(define (multsnd pos)
+ (* 10000 (sin (* pos (/ 20 DefHz) ) ) (noisefun pos)))
+
+;(play (signal->rsound 480000 (indexed-signal multsnd ) ))
+
+(define (sqrsnd pos)
+
+(abs (* 10000 (sin (* pos (/ 250 DefHz)) )) )
+
+ ; (cond
+  ; [(positive? (sin (* pos (/ 250 DefHz)))) 10000]
+  ; [else 5000]
+  ; )
+  )
+
+(play (signal->rsound 48000 (indexed-signal sqrsnd ) ))
