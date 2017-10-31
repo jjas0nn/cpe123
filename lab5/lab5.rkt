@@ -19,3 +19,5 @@
 (define mysounds (cons snare (cons ding (cons bassdrum (cons clap-1 '())))))
 (first mysounds)
 (rest (rest mysounds))
+;135
+(contains-flatt? (cons "Flatt" (cons "C" '())))
