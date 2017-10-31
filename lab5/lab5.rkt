@@ -18,4 +18,4 @@
 ;
 (define mysounds (cons snare (cons ding (cons bassdrum (cons clap-1 '())))))
 (first mysounds)
-(rest (rest (rest mysounds)))
+(rest (rest mysounds))
