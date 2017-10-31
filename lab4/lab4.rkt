@@ -16,6 +16,16 @@
                              (list 2add 5)))))
 (define 4add (rs-scale 0.5 (assemble (list (list 3add 0)
                              (list 3add 1)))))
+(define delayed_sample (rs-read/clip "ib.wav" 10000 (sec 10)))
+(define delayed_sample1 (rs-read/clip "ib.wav" 10 (sec 10)))
+(define delayed_sample2 (rs-read/clip "ib.wav" 5 (sec 10)))
+(define delayed_sample3 (rs-read/clip "ib.wav" 1 (sec 10)))
+(define delay (rs-scale 0.25 (assemble (list
+                                       (list delayed_sample 0)
+                                       (list delayed_sample1 0)
+                                       (list delayed_sample2 0)
+                                       (list delayed_sample3 0)))))
+
 ;there are more echos
 (rsound->signal/left ib)
 (rs-ith/left ib 1)
@@ -35,16 +45,16 @@
 ;number->number
 ;computes sample for reversed sound from frame index.
 ; (define (revsnd clip frame-index) (rs-ith/left clip (- 441000 frame-index)))
-;(define (revsnd ib 
+(define (revsnd frame-index)
+(rs-ith/left ib (- 441000 frame-index)))
+
+;(play (signal->rsound 441000 (indexed-signal revsnd ) ))
 
 (define (noisefun i)
   (rs-ith/left ib i))
 ;(play (signal->rsound 44100 (indexed-signal noisefun ) ))
 
-(define (revsnd pos)
-(rs-ith/left ib (- 480000 pos)))
 
-;(play (signal->rsound 480000 (indexed-signal revsnd ) ))
 
 (define (stretchsnd pos)
 (rs-ith/left ib (/ pos 2)))
