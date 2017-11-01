@@ -20,4 +20,36 @@
 (first mysounds)
 (rest (rest mysounds))
 ;135
+(define (contains-flatt? alon)
+  (cond
+    [(empty? alon) #false]
+    [(cons? alon)
+     (or (string=? (first alon) "Flatt")
+         (contains-flatt? (rest alon)))]))
 (contains-flatt? (cons "Flatt" (cons "C" '())))
+;creates list containing "Flatt" and "C"
+;replace cons with list
+;compares list against empty? condition
+;compares against OR conditions then evaluates list as true
+(define (how-many alos)
+  (cond
+    [(empty? alos) 0]
+    [else (+ (how-many (rest alos)) 1)]))
+
+;use soundlist to represent (cons rsound ...)
+;returns total frames of list of rsounds
+;list->number
+(define (soundslen soundlist) (+ (rs-frames (first soundlist)) (rs-frames (rest soundlist)))) 
+;(check-expect (soundslen (cons snare (cons ding '()))) (40000))
+(define findlength (cons ding (cons snare (cons bassdrum '()))))
+(soundslen findlength)
+;140
+;use (cons #boolean to represent list of boolean values
+;list->boolean
+;determines if all values of list are #true
+(define (alltrue? boolist) (cond
+                            [(empty? boolist) #false]
+                            [(cons? boolist)
+                             (or (string=? (first boolist) #true)
+                                 (alltrue? (rest boolist)))]))
+(define listbool (cons #true (cons #true '())))
