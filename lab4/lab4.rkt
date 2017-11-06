@@ -26,7 +26,7 @@
                                        (list delayed_sample2 0)
                                        (list delayed_sample3 0)))))
 
-;there are more echos
+;there are more echos.  the closer the starting frame reaches zero, the more normal the piece sounds.  a high starting frame leaves more echos
 (rsound->signal/left ib)
 (rs-ith/left ib 1)
 (rs-ith/left ib 2)
