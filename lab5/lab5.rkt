@@ -44,12 +44,21 @@
 (define findlength (cons ding (cons snare (cons bassdrum '()))))
 (soundslen findlength)
 ;140
+;a boolist is one of
+;'() or
+;(cons booleans)
 ;use (cons #boolean to represent list of boolean values
 ;list->boolean
 ;determines if all values of list are #true
-(define (alltrue? boolist) (cond
-                            [(empty? boolist) #false]
+;(define (alltrue boolist) (cond [(empty? boolist)...]
+;                               [(cons? boolist) (...(first boolist)...(rest...boolist)...)]))
+(check-expect (alltrue (cons #t '())) #t)
+(check-expect (alltrue (cons #t (cons #f '()))) #f)
+(check-expect (alltrue '()) #t)
+(define (alltrue boolist) (cond
+                            [(empty? boolist) #f]
                             [(cons? boolist)
-                             (or (string=? (first boolist) #true)
-                                 (alltrue? (rest boolist)))]))
+                             (if (false? (first boolist)) #f (alltrue (rest boolist)))]))
+
 (define listbool (cons #true (cons #true '())))
+(alltrue listbool)
