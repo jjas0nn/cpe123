@@ -50,6 +50,7 @@
 
 ;(play (signal->rsound 441000 (indexed-signal revsnd ) ))
 
+;returns amplitude of 10 second sound given its frame #
 (define (noisefun i)
   (rs-ith/left ib i))
 ;(play (signal->rsound 44100 (indexed-signal noisefun ) ))
@@ -64,7 +65,7 @@
 (define DefHz (/ 48000 (* 2 pi)))
 
 (define (sinesnd pos)
- (* 10000 (sin (* pos (/ 440 DefHz)) )) )
+ (sin (* pos (/ 440 DefHz)) ) )
 
 ;(play (signal->rsound 48000 (indexed-signasl sinesnd ) ))
 
@@ -73,14 +74,12 @@
 
 ;(play (signal->rsound 480000 (indexed-signal multsnd ) ))
 
-(define (sqrsnd pos)
-
-(abs (* 10000 (sin (* pos (/ 250 DefHz)) )) )
+(define (sqrsnd pos) (abs (sin (* pos (/ 250 DefHz)) ))) 
 
  ; (cond
   ; [(positive? (sin (* pos (/ 250 DefHz)))) 10000]
   ; [else 5000]
   ; )
-  )
+  ;)
 
 (play (signal->rsound 48000 (indexed-signal sqrsnd ) ))
