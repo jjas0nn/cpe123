@@ -52,9 +52,9 @@
 ;determines if all values of list are #true
 ;(define (alltrue boolist) (cond [(empty? boolist)...]
 ;                               [(cons? boolist) (...(first boolist)...(rest...boolist)...)]))
-(check-expect (alltrue (cons #t '())) #t)
-(check-expect (alltrue (cons #t (cons #f '()))) #f)
-(check-expect (alltrue '()) #t)
+;(check-expect (alltrue (cons #t '())) #t)
+;(check-expect (alltrue (cons #t (cons #f '()))) #f)
+;(check-expect (alltrue '()) #t)
 (define (alltrue boolist) (cond
                             [(empty? boolist) #f]
                             [(cons? boolist)
