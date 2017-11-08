@@ -5,6 +5,7 @@
 (require 2htdp/batch-io)
 (require racket/string)
 (require 2htdp/universe)
+(require rsound/draw)
 (make-pstream)
 (define (sec second) (* 44100 second))
 (define ib (rs-read/clip "ib.wav" 0 (sec 10)))
@@ -25,6 +26,7 @@
                                        (list delayed_sample1 0)
                                        (list delayed_sample2 0)
                                        (list delayed_sample3 0)))))
+(rs-draw ib)
 
 ;there are more echos.  the closer the starting frame reaches zero, the more normal the piece sounds.  a high starting frame leaves more echos
 (rsound->signal/left ib)
