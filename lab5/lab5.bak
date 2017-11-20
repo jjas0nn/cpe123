@@ -56,15 +56,9 @@
 ;(check-expect (alltrue (cons #t (cons #f '()))) #f)
 ;(check-expect (alltrue '()) #t)
 (define (alltrue boolist) (cond
-                            [(empty? boolist) #t]
+                            [(empty? boolist) #f]
                             [(cons? boolist)
                              (if (false? (first boolist)) #f (alltrue (rest boolist)))]))
 
 (define listbool (cons #true (cons #true '())))
 (alltrue listbool)
-;consumes boolean list and determines whether 1
-;item in list is true
-;boolist->boolean
-(define (one-true boolist) (cond
-                             [(empty? boolist) #t]
-                             [(cons? boolist
