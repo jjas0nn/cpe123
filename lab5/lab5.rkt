@@ -67,4 +67,5 @@
 ;boolist->boolean
 (define (one-true boolist) (cond
                              [(empty? boolist) #t]
-                             [(cons? boolist
+                             [(cons? boolist)
+                              (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
