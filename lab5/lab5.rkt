@@ -39,10 +39,10 @@
 ;use soundlist to represent (cons rsound ...)
 ;returns total frames of list of rsounds
 ;list->number
-(define (soundslen soundlist) (+ (rs-frames (first soundlist)) (rs-frames (rest soundlist)))) 
+;(define (soundslen soundlist) (+ (rs-frames (first soundlist)) (rs-frames (rest soundlist)))) 
 ;(check-expect (soundslen (cons snare (cons ding '()))) (40000))
 (define findlength (cons ding (cons snare (cons bassdrum '()))))
-(soundslen findlength)
+;(soundslen findlength)
 ;140
 ;a boolist is one of
 ;'() or
@@ -52,16 +52,17 @@
 ;determines if all values of list are #true
 ;(define (alltrue boolist) (cond [(empty? boolist)...]
 ;                               [(cons? boolist) (...(first boolist)...(rest...boolist)...)]))
-;(check-expect (alltrue (cons #t '())) #t)
-;(check-expect (alltrue (cons #t (cons #f '()))) #f)
-;(check-expect (alltrue '()) #t)
+
 (define (alltrue boolist) (cond
                             [(empty? boolist) #t]
-                            [(cons? boolist)
-                             (if (false? (first boolist)) #f (alltrue (rest boolist)))]))
+                            [else
+                             (if (not (first boolist)) #f (alltrue (rest boolist)))]))
 
 (define listbool (cons #true (cons #true '())))
 (alltrue listbool)
+(check-expect (alltrue (cons #t '())) #t)
+(check-expect (alltrue (cons #t (cons #f '()))) #f)
+(check-expect (alltrue '()) #t)
 ;consumes boolean list and determines whether 1
 ;item in list is true
 ;boolist->boolean
@@ -69,3 +70,4 @@
                              [(empty? boolist) #t]
                              [(cons? boolist)
                               (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
+(check-expect (one-true '()) #t)

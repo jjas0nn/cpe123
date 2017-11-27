@@ -51,6 +51,7 @@
 ;(play (signal->rsound 441000 (indexed-signal revsnd ) ))
 
 ;returns amplitude of 10 second sound given its frame #
+;where i is frame#
 (define (noisefun i)
   (rs-ith/left ib i))
 ;(play (signal->rsound 44100 (indexed-signal noisefun ) ))
