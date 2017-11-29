@@ -31,18 +31,35 @@
 ;replace cons with list
 ;compares list against empty? condition
 ;compares against OR conditions then evaluates list as true
+
+;use alos to represent list of rsounds
+;alos is one of '()
+;or (cons rsound
+;returns number of elements in list
+;cons->number
 (define (how-many alos)
   (cond
     [(empty? alos) 0]
     [else (+ (how-many (rest alos)) 1)]))
+(check-expect (how-many mysounds) 4)
 
-;use soundlist to represent (cons rsound ...)
-;returns total frames of list of rsounds
-;list->number
-;(define (soundslen soundlist) (+ (rs-frames (first soundlist)) (rs-frames (rest soundlist)))) 
-;(check-expect (soundslen (cons snare (cons ding '()))) (40000))
-(define findlength (cons ding (cons snare (cons bassdrum '()))))
-;(soundslen findlength)
+;a soundlist is one of '()
+;or (cons rsound...
+;use soundlist to represent list of rsounds
+;returns total length of sounds in list as frames
+;cons->integer
+;(define (framelength soundlist)
+;  (cond
+;    [(empty? soundlist)...]
+;    [else
+;     (... (first soundlist) ... (framelength (rest soundlist)))]))
+(define (framelength soundlist)
+  (cond
+    [(empty? soundlist) 0]
+    [else
+     (+ (rs-frames (first soundlist)) (framelength (rest soundlist)))]))
+(check-expect (framelength mysounds) 5)
+
 ;140
 ;a boolist is one of
 ;'() or
@@ -71,3 +88,4 @@
                              [(cons? boolist)
                               (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
 (check-expect (one-true '()) #t)
+
