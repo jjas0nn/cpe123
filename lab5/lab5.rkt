@@ -63,7 +63,7 @@
 ;140
 ;a boolist is one of
 ;'() or
-;(cons booleans)
+;(cons boolean list-of-booleans)
 ;use (cons #boolean to represent list of boolean values
 ;list->boolean
 ;determines if all values of list are #true
@@ -88,4 +88,42 @@
                              [(cons? boolist)
                               (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
 (check-expect (one-true '()) #t)
+
+(define ps (make-pstream))
+;plays rsounds from list in reverse order
+;list of sounds --> pstream
+;(define (revplay los)
+;  (cond
+;    [(empty? los)    ]
+;    [else        (first los)    (revplay (rest los))]))
+(define (revplay soundlist)
+  (cond
+    [(empty? soundlist)   (silence 1) ]
+    [else (andqueue ps (first soundlist) (+ (pstream-current-frame ps) (remaining-frames soundlist))    (revplay (rest soundlist)))]))
+
+(define (remaining-frames soundlist)
+  (cond
+    [(empty? soundlist) 0]
+    [else (+ (rs-frames (first soundlist)) (remaining-frames (rest soundlist)))]
+    ))
+
+;(revplay testlist) should play kick then snare then ding
+
+;plays midi notes in a list of notes at a given volume
+;list of tones --> list of sounds
+;(define (tones-list lot vol)
+;  (cond
+;    [(empty? lot)   ]
+;    [else  vol    (first lot)   (tones-list (rest lot))]))
+(define (tones-list tonelist vol)
+  (cond
+    [(empty? tonelist)  '() ]
+    [else  (cons (rs-scale vol (piano-tone (first tonelist)))   (tones-list (rest lot) tonelist))]))
+  
+
+(define (play-sound-list soundlist)
+  (cond
+    [(empty? soundlist) (silence 1)]
+    [else (rs-append (first soundlist) (play-sound-list (rest soundlist)))]))
+
 
