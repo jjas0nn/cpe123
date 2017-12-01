@@ -19,7 +19,7 @@
 ;
 (define mysounds (cons snare (cons ding (cons bassdrum (cons clap-1 '())))))
 (first mysounds)
-(rest (rest mysounds))
+(first((rest (rest mysounds))))
 ;135
 (define (contains-flatt? alon)
   (cond
@@ -85,10 +85,11 @@
 ;item in list is true
 ;boolist->boolean
 (define (one-true boolist) (cond
-                             [(empty? boolist) #t]
+                             [(empty? boolist) #f]
                              [(cons? boolist)
                               (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
 (check-expect (one-true '()) #t)
+
 
 (define ps (make-pstream))
 
@@ -145,5 +146,5 @@
   (cond
     [(empty? soundlist) (silence 1)]
     [else (rs-append (first soundlist) (play-sound-list (rest soundlist)))]))
-
+st02cq
 
