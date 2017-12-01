@@ -31,40 +31,99 @@
 ;replace cons with list
 ;compares list against empty? condition
 ;compares against OR conditions then evaluates list as true
+
+;use alos to represent list of rsounds
+;alos is one of '()
+;or (cons rsound
+;returns number of elements in list
+;cons->number
 (define (how-many alos)
   (cond
     [(empty? alos) 0]
     [else (+ (how-many (rest alos)) 1)]))
+(check-expect (how-many mysounds) 4)
 
-;use soundlist to represent (cons rsound ...)
-;returns total frames of list of rsounds
-;list->number
-(define (soundslen soundlist) (+ (rs-frames (first soundlist)) (rs-frames (rest soundlist)))) 
-;(check-expect (soundslen (cons snare (cons ding '()))) (40000))
-(define findlength (cons ding (cons snare (cons bassdrum '()))))
-(soundslen findlength)
+;a soundlist is one of '()
+;or (cons rsound...
+;use soundlist to represent list of rsounds
+;returns total length of sounds in list as frames
+;cons->integer
+;(define (framelength soundlist)
+;  (cond
+;    [(empty? soundlist)...]
+;    [else
+;     (... (first soundlist) ... (framelength (rest soundlist)))]))
+(define (framelength soundlist)
+  (cond
+    [(empty? soundlist) 0]
+    [else
+     (+ (rs-frames (first soundlist)) (framelength (rest soundlist)))]))
+(check-expect (framelength mysounds) 5)
+
 ;140
 ;a boolist is one of
 ;'() or
-;(cons booleans)
+;(cons boolean list-of-booleans)
 ;use (cons #boolean to represent list of boolean values
 ;list->boolean
 ;determines if all values of list are #true
 ;(define (alltrue boolist) (cond [(empty? boolist)...]
 ;                               [(cons? boolist) (...(first boolist)...(rest...boolist)...)]))
-;(check-expect (alltrue (cons #t '())) #t)
-;(check-expect (alltrue (cons #t (cons #f '()))) #f)
-;(check-expect (alltrue '()) #t)
+
 (define (alltrue boolist) (cond
                             [(empty? boolist) #t]
-                            [(cons? boolist)
-                             (if (false? (first boolist)) #f (alltrue (rest boolist)))]))
+                            [else
+                             (if (not (first boolist)) #f (alltrue (rest boolist)))]))
 
 (define listbool (cons #true (cons #true '())))
 (alltrue listbool)
+(check-expect (alltrue (cons #t '())) #t)
+(check-expect (alltrue (cons #t (cons #f '()))) #f)
+(check-expect (alltrue '()) #t)
 ;consumes boolean list and determines whether 1
 ;item in list is true
 ;boolist->boolean
 (define (one-true boolist) (cond
                              [(empty? boolist) #t]
-                             [(cons? boolist
+                             [(cons? boolist)
+                              (if (eq? #t (first boolist)) #t (one-true (rest boolist)))]))
+(check-expect (one-true '()) #t)
+
+(define ps (make-pstream))
+;plays rsounds from list in reverse order
+;list of sounds --> pstream
+;(define (revplay los)
+;  (cond
+;    [(empty? los)    ]
+;    [else        (first los)    (revplay (rest los))]))
+(define (revplay soundlist)
+  (cond
+    [(empty? soundlist)   (silence 1) ]
+    [else (andqueue ps (first soundlist) (+ (pstream-current-frame ps) (remaining-frames soundlist))    (revplay (rest soundlist)))]))
+
+(define (remaining-frames soundlist)
+  (cond
+    [(empty? soundlist) 0]
+    [else (+ (rs-frames (first soundlist)) (remaining-frames (rest soundlist)))]
+    ))
+
+;(revplay testlist) should play kick then snare then ding
+
+;plays midi notes in a list of notes at a given volume
+;list of tones --> list of sounds
+;(define (tones-list lot vol)
+;  (cond
+;    [(empty? lot)   ]
+;    [else  vol    (first lot)   (tones-list (rest lot))]))
+(define (tones-list tonelist vol)
+  (cond
+    [(empty? tonelist)  '() ]
+    [else  (cons (rs-scale vol (piano-tone (first tonelist)))   (tones-list (rest lot) tonelist))]))
+  
+
+(define (play-sound-list soundlist)
+  (cond
+    [(empty? soundlist) (silence 1)]
+    [else (rs-append (first soundlist) (play-sound-list (rest soundlist)))]))
+
+

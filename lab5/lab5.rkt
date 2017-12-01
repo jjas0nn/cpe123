@@ -5,6 +5,7 @@
 (require 2htdp/batch-io)
 (require racket/string)
 (require 2htdp/universe)
+(require rsound/piano-tones)
 ;129
 (cons "Merc" (cons "venus" (cons "earth" (cons "mars" (cons "saturn" (cons "uranus" (cons "neptune" '())))))))
 (cons "redbull" (cons "ice cream" (cons "pizza" '())))
@@ -44,21 +45,21 @@
 (check-expect (how-many mysounds) 4)
 
 ;a soundlist is one of '()
-;or (cons rsound...
+;or (cons rsound soundlist)
 ;use soundlist to represent list of rsounds
 ;returns total length of sounds in list as frames
 ;cons->integer
-;(define (framelength soundlist)
+;(define (soundslen soundlist)
 ;  (cond
 ;    [(empty? soundlist)...]
 ;    [else
 ;     (... (first soundlist) ... (framelength (rest soundlist)))]))
-(define (framelength soundlist)
+(define (soundslen soundlist)
   (cond
     [(empty? soundlist) 0]
     [else
-     (+ (rs-frames (first soundlist)) (framelength (rest soundlist)))]))
-(check-expect (framelength mysounds) 5)
+     (+ (rs-frames (first soundlist)) (soundslen (rest soundlist)))]))
+(check-expect (soundslen mysounds) 5)
 
 ;140
 ;a boolist is one of
@@ -90,37 +91,56 @@
 (check-expect (one-true '()) #t)
 
 (define ps (make-pstream))
-;plays rsounds from list in reverse order
-;list of sounds --> pstream
-;(define (revplay los)
-;  (cond
-;    [(empty? los)    ]
-;    [else        (first los)    (revplay (rest los))]))
-(define (revplay soundlist)
-  (cond
-    [(empty? soundlist)   (silence 1) ]
-    [else (andqueue ps (first soundlist) (+ (pstream-current-frame ps) (remaining-frames soundlist))    (revplay (rest soundlist)))]))
 
+;a soundlist is one of '()
+;or (cons rsound soundlist)
+;soundlist->integer
+;returns number of frames in rest of soundlist
+;helper fn for revplay
+;(define (remaining-frames soundlist)
+;(cond
+;  [(empty? soundlist) ...]
+;  (else ... (rs-frames (first soundlist)) ... (remaining-frames (rest-soundlist))...]
 (define (remaining-frames soundlist)
   (cond
     [(empty? soundlist) 0]
     [else (+ (rs-frames (first soundlist)) (remaining-frames (rest soundlist)))]
     ))
+(remaining-frames mysounds)
+;plays rsounds from list in reverse order
+;soundlist->pstream
+;(define (revplay soundlist)
+;  (cond
+;    [(empty? soundlist)...]
+;    [else...(first soundlist)...(revplay (rest soundlist))]))
+(define (revplay soundlist)
+  (cond
+    [(empty? soundlist)   (silence 1) ]
+    [else (andqueue ps (first soundlist) (+ (pstream-current-frame ps) (remaining-frames soundlist)) (revplay (rest soundlist)))]))
+(revplay mysounds)
+;(revplay mysounds) should play clap, bassdrum,ding, finally snare
 
-;(revplay testlist) should play kick then snare then ding
-
-;plays midi notes in a list of notes at a given volume
-;list of tones --> list of sounds
+;a midilist is one of
+;'()
+;or (cons integer midilist)
+;returns list of rsounds generated from midi numbers in midilist
+;midilist --> soundlist
 ;(define (tones-list lot vol)
 ;  (cond
-;    [(empty? lot)   ]
-;    [else  vol    (first lot)   (tones-list (rest lot))]))
-(define (tones-list tonelist vol)
+;    [(empty? lot)...]
+;    [else...vol...(first lot)...(tones-list (rest lot))]))
+(define list-of-midi (cons 63 (cons 54 (cons 68 (cons 73 '())))))
+(define (tones-list midilist vol)
   (cond
-    [(empty? tonelist)  '() ]
-    [else  (cons (rs-scale vol (piano-tone (first tonelist)))   (tones-list (rest lot) tonelist))]))
-  
-
+    [(empty? midilist) '() ]
+    [else  (cons (rs-scale vol (piano-tone (first midilist))) (tones-list (rest midilist) midilist))]))
+(tones-list list-of-midi 0.5)  
+;generates rsound from list of sounds
+;soundlist->rsound
+;define (play-sound-list soundlist)
+;  (cond
+;    [(empty? soundlist) ...]
+;    [else ... (first soundlist)... (play-sound-list (rest soundlist))]))
 (define (play-sound-list soundlist)
   (cond
     [(empty? soundlist) (silence 1)]
