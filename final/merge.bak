@@ -257,8 +257,8 @@
 
 #;(define-struct ws [vol songpos playing? fam tempo note-list wlist timer1 timer2])
 
-;[data definitions placed at top]
-;[What I changed are some data definitions regarding the UI part, and changing my structure to be
+[data definitions placed at top]
+[What I changed are some data definitions regarding the UI part, and changing my structure to be
 ;consistent with Charskie's
 
 ;--------------------------------------------------------------------------------------------------
