@@ -68,7 +68,7 @@
 (define (sinesnd pos)
  (sin (* pos (/ 440 DefHz)) ) )
 
-;(play (signal->rsound 48000 (indexed-signasl sinesnd ) ))
+;(play (signal->rsound 48000 (indexed-signal sinesnd ) ))
 
 (define (multsnd pos)
   (*(sin (* pos (/ 20 DefHz) ) ) (noisefun pos)))
