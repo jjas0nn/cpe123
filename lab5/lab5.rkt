@@ -19,7 +19,7 @@
 ;
 (define mysounds (cons snare (cons ding (cons bassdrum (cons clap-1 '())))))
 (first mysounds)
-(first((rest (rest mysounds))))
+(first(rest (rest mysounds)))
 ;135
 (define (contains-flatt? alon)
   (cond
@@ -146,5 +146,5 @@
   (cond
     [(empty? soundlist) (silence 1)]
     [else (rs-append (first soundlist) (play-sound-list (rest soundlist)))]))
-st02cq
+;st02cq
 
